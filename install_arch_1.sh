@@ -63,6 +63,5 @@ create_disk_partitions() {
     echo "  Root: ${disk}2 (ext4)"
 }
 
-check_internet_connection
 sync_clock
 create_disk_partitions
