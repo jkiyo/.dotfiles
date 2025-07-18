@@ -48,11 +48,11 @@ create_disk_partitions() {
     # Format partitions
     echo "Formatting partitions..."
     mkfs.fat -F32 "${disk}1"
-    mkfs.ext4 "${disk}2"
+    mkfs.ext4 /dev/mapper/cryptroot
     
     echo "✓ UEFI partitions created and formatted"
     echo "  Boot: ${disk}1 (FAT32)"
-    echo "  Root: ${disk}2 (ext4)"
+    echo "  Root: ${disk}2 (/dev/mapper/cryptroot) (ext4)"
 }
 
 create_disk_partitions
