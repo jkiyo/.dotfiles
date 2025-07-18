@@ -63,5 +63,5 @@ create_disk_partitions() {
     echo "  Root: ${disk}2 (ext4)"
 }
 
-sync_clock
+set_timedate
 create_disk_partitions
