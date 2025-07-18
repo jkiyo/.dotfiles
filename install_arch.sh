@@ -2,14 +2,6 @@
 
 set -euo pipefail
 
-set_timedate() {
-    echo "=== Setting Time and Date ==="
-    timedatectl set-timezone America/Sao_Paulo
-    timedatectl set-ntp true
-    timedatectl status
-    timedatectl show-timezone
-}
-
 create_disk_partitions() {
     echo "=== UEFI Disk Partitioning Setup ==="
     
@@ -43,7 +35,7 @@ create_disk_partitions() {
     parted "$disk" --script mkpart primary ext4 513MiB 100%
     
     # Wait for kernel to update partition table
-    sleep 2
+    sync
     partprobe "$disk"
 
     # Encrypting the root partition
@@ -63,5 +55,4 @@ create_disk_partitions() {
     echo "  Root: ${disk}2 (ext4)"
 }
 
-set_timedate
 create_disk_partitions
