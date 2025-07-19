@@ -12,9 +12,9 @@ setup_timezone() {
 
 setup_locale() {
     echo "=== Setting Locale ==="
-    sed -i 's/^#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen
+    sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
     locale-gen
-    echo "LANG=pt_BR.UTF-8" > /etc/locale.conf
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
 }
 
 setup_hostname() {
@@ -43,10 +43,10 @@ setup_sudo() {
 
 setup_user() {
     echo "=== Setting User ==="
-    read -p "Enter username: " username
+    local username="$1"
     useradd -m -G wheel -s /bin/bash "$username"
     passwd "$username"
-    echo "✓ User $username set"
+    echo "✓ User $username created"
 }
 
 setup_mkinitcpio() {
@@ -94,15 +94,29 @@ EOF
     echo "✓ Grub set"
 }
 
+setup_autologin() {
+    local username="$1"
+    cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $username %I $TERM
+EOF
+    cat /etc/systemd/system/getty@tty1.service.d/autologin.conf
+    echo "✓ Autologin set on tty1 for user $username"
+}
+
+read -p "Enter username: " username
+
 setup_timezone
 setup_locale
 setup_hostname
 setup_root_password
 setup_sudo
-setup_user
+setup_user "$username"
 setup_mkinitcpio
 setup_grub
 setup_network
+setup_autologin "$username"
 
 echo "================================================"
 echo "The setup is complete, you can now exit the chroot and reboot the system."
