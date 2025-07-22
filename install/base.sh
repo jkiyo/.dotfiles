@@ -70,10 +70,12 @@ install_arch_base() {
         base-devel \
         cryptsetup \
         efibootmgr \
+        git \
         grub \
         linux \
         linux-firmware \
         lvm2 \
+        man-db \
         nano \
         networkmanager \
         vim
@@ -92,5 +94,5 @@ install_arch_base
 echo "================================================"
 echo "Run the following command to continue with the installation:"
 echo "arch-chroot /mnt"
-echo "bash <(curl -s https://raw.githubusercontent.com/jkiyo/.dotfiles/refs/heads/master/install_arch_setup.sh)"
+echo Then, run the setup.sh script
 echo "================================================"
