@@ -96,6 +96,7 @@ EOF
 
 setup_autologin() {
     local username="$1"
+    mkdir -p /etc/systemd/system/getty@tty1.service.d
     cat <<EOF > /etc/systemd/system/getty@tty1.service.d/autologin.conf
 [Service]
 ExecStart=
