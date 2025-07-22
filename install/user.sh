@@ -25,7 +25,7 @@ setup_shell_profile() {
     echo "Removing ~/.bash_profile, ~/.zsh, and ~/.profile"
     rm -f ~/.bash_profile
     rm -f ~/.profile
-    echo "Linking ~/.profile"
+    echo "Linking ~/.profile from ~/.dotfiles/.profile"
     ln -s ~/.dotfiles/.profile ~/.profile
 }
 
